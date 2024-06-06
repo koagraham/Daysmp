@@ -1,10 +1,10 @@
 Home
 Server
 Forum
+-> Post
+-> Comment
 Rules
 Help
 Login
 Logout
-forum =>
-    CreateForumPostButton
-    CommentForumPostButton
+Add footer navbar and post component and comment component

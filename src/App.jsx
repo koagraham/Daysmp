@@ -1,33 +1,19 @@
-import { Outlet, NavLink } from 'react-router-dom';
+import { Outlet } from 'react-router-dom'
+import Navbar from './components/Navbar.jsx'
+import Footer from './components/Footer.jsx'
 
 export default function App() {
     return (
       <>
-        <nav>
-          <ul>
-            <li>
-              <NavLink to="/">Home</NavLink>
-            </li>
-            <li>
-              <NavLink to="/server">Server</NavLink>
-            </li>
-            <li>
-              <NavLink to="/forum">Forum</NavLink>
-            </li>
-            <li>
-              <NavLink to="/rules">Rules</NavLink>
-            </li>
-            <li>
-              <NavLink to="/help">Help</NavLink>
-            </li>
-          </ul>
-        </nav>
+        <Navbar />
 
         <hr />
 
         <main>
           <Outlet />
         </main>
+
+        <Footer />
       </>
     );
   }
