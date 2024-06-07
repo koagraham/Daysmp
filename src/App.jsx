@@ -1,19 +1,20 @@
-import { Outlet } from 'react-router-dom'
+import { Outlet, Link } from 'react-router-dom'
 import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
+import { useSelector, useDispatch } from 'react-redux'
 
 export default function App() {
-    return (
-      <>
-        <Navbar />
+  return (
+    <>
+      <Navbar />
 
-        <hr />
+      <hr />
 
-        <main>
-          <Outlet />
-        </main>
+      <main>
+        <Outlet />
+      </main>
 
-        <Footer />
-      </>
-    );
-  }
+      <Footer />
+    </>
+  );
+}

@@ -1,9 +1,9 @@
 import { User, Post, Comment, PostLike, CommentLike } from '../src/database/model.js'
-import { sequelize } from '../src/database/dbUtils.js'
 import { db } from '../src/database/model.js'
 import postData from './data/posts.json' assert { type: 'json' }
 import commentData from './data/comments.json' assert { type: 'json'}
 import lodash from 'lodash'
+import bcryptjs from 'bcryptjs'
 
 console.log('Syncing database...')
 await db.sync({ force: true })
@@ -11,14 +11,14 @@ await db.sync({ force: true })
 console.log('Seeding database...')
 
 const usersToCreate = []
-for (let i = 0; i < 10; i++) {
-    usersToCreate.push({name: `user${i}`, email: `user${i}@gmail.com`, password: `test`})
+for (let i = 1; i < 10; i++) {
+    usersToCreate.push({username: `user${i}`, email: `user${i}@gmail.com`, password: bcryptjs.hashSync('test', bcryptjs.genSaltSync(10))})
 }
 
 const usersInDB = await Promise.all(usersToCreate.map(async (user) => {
-    const {name, email, password} = user
+    const {username, email, password} = user
 
-    const newUser =  await User.create({name, email, password})
+    const newUser =  await User.create({username, email, password})
 
     return newUser
 }))
@@ -66,10 +66,6 @@ const commentLikesInDB = await Promise.all(usersToCreate.flatMap((user) => {
 }))
 
 console.log(postsInDB)
-// console.log(usersInDB)
-// console.log(commentsInDB)
-// console.log(postLikesInDB)
-// console.log(commentLikesInDB)
 
 await db.close()
 console.log('Finished seeding database!')

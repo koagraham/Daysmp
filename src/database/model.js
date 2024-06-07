@@ -1,7 +1,6 @@
 import { Model, DataTypes, Sequelize } from 'sequelize';
 import util from 'util';
 import url from 'url'
-import { createDatabase } from './dbUtils.js';
 import connectToDB from './db.js'
 
 export const db = await connectToDB('postgresql:///forum')
@@ -20,7 +19,7 @@ export class User extends Model {
         autoIncrement: true,
         primaryKey: true,
       },
-      name: {
+      username: {
         type: DataTypes.STRING(30),
         unique: true,
         allowNull: false
@@ -31,7 +30,7 @@ export class User extends Model {
         allowNull: false
       },
       password: {
-        type: DataTypes.STRING(30),
+        type: DataTypes.STRING,
         allowNull: false
       }
     },
