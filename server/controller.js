@@ -7,7 +7,9 @@ export const handlerFunctions = {
             res.json({
                 message: "user is still logged in",
                 success: true,
-                userID: req.session.userID
+                userID: req.session.userID,
+                username: req.session.username,
+                loggedIn: true
             })
             return
         }
@@ -38,13 +40,11 @@ export const handlerFunctions = {
         })
 
         req.session.userID = user.userID
-        req.session.userName = user.username
 
         res.json({
             message: 'user created',
             success: 'true',
-            userID: user.userID,
-            userName: user.userName
+            userID: user.userID
         })
     },
 
@@ -66,11 +66,14 @@ export const handlerFunctions = {
         }
 
         req.session.userID = user.userID
+        req.session.username = user.username
 
         res.json({
             message: 'user logged in',
             success: true,
-            userID: req.session.userID
+            userID: req.session.userID,
+            username: req.session.username,
+            loggedIn: true
         })
     },
 

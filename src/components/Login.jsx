@@ -9,6 +9,7 @@ export default function Login() {
     const [showRegister, setShowRegister] = useState(false)
 
     const userID = useSelector((state) => state.userID)
+    const userName = useSelector((state) => state.username)
     const dispatch = useDispatch()
 
     const handleLogin = async (e) => {
@@ -24,7 +25,10 @@ export default function Login() {
         if (res.data.success) {
             dispatch({
                 type: "USER_AUTH",
-                payload: res.data.userID
+                payload: {
+                    userID: res.data.userID,
+                    username: res.data.username
+                }
             })
 
             setUsername("")
@@ -48,7 +52,11 @@ export default function Login() {
         if (res.data.success) {
             dispatch({
                 type: "USER_AUTH",
-                payload: res.data.userID
+                payload: {
+                    userID: res.data.userID,
+                    username: res.data.username,
+                    loggedIn: true
+                }
             })
         }
     }
@@ -62,10 +70,7 @@ export default function Login() {
     ) : (
         <>
         <nav>
-            <h1>Login/Logout Page</h1>
-            {userID && 
-                <button onClick={handleLogout}>Logout</button>
-            }
+            <h1>Login</h1>
             {!userID && 
                 <>
                     <button>Login</button>
@@ -93,7 +98,10 @@ export default function Login() {
             </form>
         }
         {userID && 
-            <h3>Welcome, user #{userID}</h3>
+            <>
+                <h3>Welcome, {userName}</h3>
+                <button onClick={handleLogout}>Logout</button>
+            </>
         }
         </>
     )
