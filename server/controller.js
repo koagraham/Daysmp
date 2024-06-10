@@ -1,4 +1,4 @@
-import { User } from '../src/database/model.js'
+import { User, Post } from '../src/database/model.js'
 import bcryptjs from 'bcryptjs'
 
 export const handlerFunctions = {
@@ -86,4 +86,14 @@ export const handlerFunctions = {
         })
         return
     },
+
+    posts: async (req, res) => {
+        const posts = await Post.findAll()
+
+        res.json({
+            message: 'posts requested',
+            success: true,
+            posts: posts
+        })
+    }
 }
