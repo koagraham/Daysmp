@@ -1,11 +1,12 @@
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { useState, useEffect } from 'react'
-import Post from './forum/Post.jsx'
+import PostSquare from './forum/PostSquare.jsx'
 import axios from 'axios'
 
 export default function Forum() {
     const loggedIn = useSelector((state) => state.loggedIn)
     const [posts, setPosts] = useState([])
+    const dispatch = useDispatch()
     
     const getPosts = async () => {
         const res = await axios.get('/api/posts')
@@ -13,7 +14,23 @@ export default function Forum() {
         setPosts(posts)
     }
 
+    const sessionCheck = async () => {
+        const res = await axios.get('/api/session-check')
+
+        if (res.data.success) {
+            dispatch({
+                type: "USER_AUTH",
+                payload: {
+                    userID: res.data.userID,
+                    username: res.data.username,
+                    loggedIn: true
+                }
+            })
+        }
+    }
+
     useEffect(() => {
+        sessionCheck();
         getPosts()
     }, [])
 
@@ -22,7 +39,7 @@ export default function Forum() {
             <>
                 <h1>You found the forum page!</h1>
                 <div>{posts.map((post) => (
-                    <Post key={post.postID} {...post}/>
+                    <PostSquare key={post.postID} {...post}/>
                 ))}</div>
             </>
         )

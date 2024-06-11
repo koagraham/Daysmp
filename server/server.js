@@ -19,5 +19,8 @@ app.post('/api/login', handlerFunctions.login)
 app.get('/api/logout', handlerFunctions.logout)
 app.post('/api/register', handlerFunctions.register)
 app.get('/api/posts', handlerFunctions.posts)
+app.get('/api/posts/:postID', handlerFunctions.post)
+app.get('/api/comments/:postID', handlerFunctions.comments)
+app.get('/api/author/:userID', handlerFunctions.author)
 
 ViteExpress.listen(app, port, () => console.log(`Server is listening on http://localhost:${port.toString()}`));

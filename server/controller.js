@@ -1,4 +1,4 @@
-import { User, Post } from '../src/database/model.js'
+import { User, Post, Comment } from '../src/database/model.js'
 import bcryptjs from 'bcryptjs'
 
 export const handlerFunctions = {
@@ -94,6 +94,44 @@ export const handlerFunctions = {
             message: 'posts requested',
             success: true,
             posts: posts
+        })
+    },
+
+    post: async (req, res) => {
+        const post = await Post.findByPk(req.params.postID)
+
+        res.json({
+            message: 'one post requested',
+            success: true,
+            post: post
+        })
+    },
+
+    comments: async (req, res) => {
+        try {
+            const { postID } = req.params
+            const comments = await Comment.findAll({where: {
+                postID: postID
+            }})
+
+            res.json({
+                message: 'comments requested',
+                success: true,
+                comments: comments
+            })
+        } catch (error) {
+            console.error(error)
+        }
+    },
+
+    author: async (req, res) => {
+        const { userID } = req.params
+        const user = await User.findByPk(userID)
+
+        res.json({
+            message: 'author requested',
+            success: true,
+            username: user.username
         })
     }
 }
