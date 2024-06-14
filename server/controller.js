@@ -1,4 +1,4 @@
-import { User, Post, Comment } from '../src/database/model.js'
+import { User, Post, Comment, PostLike, CommentLike } from '../src/database/model.js'
 import bcryptjs from 'bcryptjs'
 
 export const handlerFunctions = {
@@ -99,11 +99,29 @@ export const handlerFunctions = {
 
     post: async (req, res) => {
         const post = await Post.findByPk(req.params.postID)
+        const author = await User.findOne({where: {userID: post.userID}})
+        const likesCount = await PostLike.count({ where: { postID: req.params.postID } });
+        let isLiked = false
+        let postLikeID = null
+        const userLiked = await PostLike.findOne({ 
+            where: { 
+                postID: req.params.postID, 
+                userID: req.session.userID
+        }})
+
+        if (userLiked) {
+            isLiked = true
+            postLikeID = userLiked.postLikeID
+        }
 
         res.json({
             message: 'one post requested',
             success: true,
-            post: post
+            post: post,
+            likes: likesCount,
+            isLiked: isLiked,
+            postLikeID: postLikeID,
+            author: author.username
         })
     },
 
@@ -124,14 +142,110 @@ export const handlerFunctions = {
         }
     },
 
-    author: async (req, res) => {
-        const { userID } = req.params
-        const user = await User.findByPk(userID)
+    comment: async (req, res) => {
+        const comment = await Comment.findByPk(req.params.commentID)
+        const author = await User.findOne({where: {userID: comment.userID}})
+        const likesCount = await CommentLike.count({ where: { commentID: req.params.commentID } });
+        let isLiked = false
+        let commentLikeID = null
+        const userLiked = await CommentLike.findOne({ 
+            where: { 
+                commentID: req.params.commentID, 
+                userID: req.session.userID
+        }})
+
+        if (userLiked) {
+            isLiked = true
+            commentLikeID = userLiked.commentLikeID
+        }
 
         res.json({
-            message: 'author requested',
+            message: 'one comment requested',
             success: true,
-            username: user.username
+            comment: comment,
+            likes: likesCount,
+            isLiked: isLiked,
+            commentLikeID: commentLikeID,
+            author: author.username
         })
+    },
+
+    removePostLike: async (req, res) => {
+        const userLiked = await PostLike.findByPk(req.params.postLikeID)
+        if (userLiked) {
+            await userLiked.destroy()
+        }
+        res.json({
+            message: 'removed post like',
+            success: true
+        })
+    },
+
+    addPostLike: async (req, res) => {
+        const { postID } = req.params
+        const { userID } = req.body
+        const userLiked = await PostLike.findOne({ 
+            where: { 
+                postID: postID,
+                userID: userID
+        }})
+        if (!userLiked) {
+            const newLike = await PostLike.create({userID: userID, postID: postID})
+            res.json({
+                message: 'liked post',
+                success: true,
+                postLikeID: newLike.postLikeID
+            })
+        }
+        else {
+            res.json({
+                message: 'already liked post',
+                success: true,
+                postLikeID: userLiked.postLikeID
+            })
+        }
+    },
+
+    removeCommentLike: async (req, res) => {
+        const userLiked = await CommentLike.findByPk(req.params.commentLikeID)
+        if (userLiked) {
+            await userLiked.destroy()
+        }
+        res.json({
+            message: 'removed comment like',
+            success: true
+        })
+    },
+
+    addCommentLike: async (req, res) => {
+        const { commentID } = req.params
+        const { userID } = req.body
+        const userLiked = await CommentLike.findOne({ 
+            where: { 
+                commentID: commentID,
+                userID: userID
+        }})
+        if (!userLiked) {
+            const newLike = await CommentLike.create({userID: userID, commentID: commentID})
+            res.json({
+                message: 'liked comment',
+                success: true,
+                commentLikeID: newLike.commentLikeID
+            })
+        }
+        else {
+            res.json({
+                message: 'already liked comment',
+                success: true,
+                commentLikeID: userLiked.commentLikeID
+            })
+        }
     }
+
+    // post: async (req, res) => {
+    //     const user = await User.findByPk(req.session.userID)
+    //     const newPost = user.createPost({
+
+    //     })
+    // }
 }

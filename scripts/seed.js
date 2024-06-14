@@ -39,33 +39,25 @@ const commentsInDB = await Promise.all(commentData.map((comment) => {
     return newComment
 }))
 
-const postLikesInDB = await Promise.all(usersToCreate.flatMap((user) => {
-    const arr = []
-
-    for (const post of postData) {
-        if (lodash.random(1, 10) <= 7) {
-            const newPostLike = PostLike.create(post.postID, user.userID)
-            arr.push(newPostLike)
+const postLikesInDB = await Promise.all(usersInDB.flatMap((user) => {
+    const postLikes = postsInDB.map((post) => {
+        if (lodash.random(1, 10) <= 5) {
+            return PostLike.create({ postID: post.postID, userID: user.userID })
         }
-    }
+    })
 
-    return arr
+    return postLikes
 }))
 
-const commentLikesInDB = await Promise.all(usersToCreate.flatMap((user) => {
-    const arr = []
-
-    for (const post of postData) {
-        if (lodash.random(1, 10) <= 7) {
-            const newPostLike = CommentLike.create(post.postID, user.userID)
-            arr.push(newPostLike)
+const commentLikesInDB = await Promise.all(usersInDB.flatMap((user) => {
+    const commentLikes = commentsInDB.map((comment) => {
+        if (lodash.random(1, 10) <= 5) {
+            return CommentLike.create({ commentID: comment.commentID, userID: user.userID })
         }
-    }
+    })
 
-    return arr
+    return commentLikes
 }))
-
-console.log(postsInDB)
 
 await db.close()
 console.log('Finished seeding database!')

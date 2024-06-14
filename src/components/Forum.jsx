@@ -38,6 +38,7 @@ export default function Forum() {
         return (
             <>
                 <h1>You found the forum page!</h1>
+                <button>Create Post</button>
                 <div>{posts.map((post) => (
                     <PostSquare key={post.postID} {...post}/>
                 ))}</div>
