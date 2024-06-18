@@ -20,7 +20,9 @@ app.get('/api/logout', handlerFunctions.logout) //handle logging out
 app.post('/api/register', handlerFunctions.register) //register a new user
 app.get('/api/posts', handlerFunctions.posts) //get all the posts
 app.get('/api/posts/:postID', handlerFunctions.post) // get a specific post
+app.post('/api/post', handlerFunctions.createPost) // create a post
 app.get('/api/postComments/:postID', handlerFunctions.comments) //get all the comments for a specific post
+app.post('/api/comment', handlerFunctions.createComment)
 app.delete('/api/postLikes/:postLikeID', handlerFunctions.removePostLike) //remove a specific like for a specific post
 app.post('/api/postLikes/:postID', handlerFunctions.addPostLike) //add a like for a specific post
 app.get('/api/comments/:commentID', handlerFunctions.comment) //get a specific comment

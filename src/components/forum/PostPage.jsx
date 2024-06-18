@@ -13,6 +13,8 @@ export default function PostPage() {
     const [likes, setLikes] = useState(0)
     const [isLiked, setIsLiked] = useState(true)
     const [postLikeID, setPostLikeID] = useState(null)
+    const [body, setBody] = useState('')
+    const [isEditing, setIsEditing] = useState(false)
     const userID = useSelector((state) => state.userID)
 
     const getPost = async () => {
@@ -44,6 +46,28 @@ export default function PostPage() {
         }
     }
 
+    const createComment = () => {
+        setIsEditing(true)
+    }
+
+    const handleSubmit = async (event) => {
+        event.preventDefault()
+        await submitComment(body)
+        //default state value
+        setBody('');
+    }
+
+    const submitComment = async (body) => {
+        const data = {
+            body: body,
+            userID: userID,
+            postID: postID
+        }
+        const res = await axios.post('/api/comment', data)
+        setIsEditing(false)
+        getComments()
+    }
+
     useEffect(() => {
         getPost();
         getComments();
@@ -58,6 +82,21 @@ export default function PostPage() {
             <ul>{comments.map((comment) => (
                 <Comment key={comment.commentID} {...comment}/>
             ))}</ul>
+            {!isEditing ?
+                <button onClick={createComment}>Comment</button>
+                :
+                <div></div>    
+            }
+            {isEditing ? 
+                <form onSubmit={handleSubmit}>
+                    <textarea id="body" name="body" maxLength="250" value={body} required
+                    onChange={(e) => setBody(e.target.value)}></textarea>
+                    <br />
+                    <button type="submit">Comment</button>
+                </form>
+                :
+                <span></span>
+            }
         </div>
     )
 }

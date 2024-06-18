@@ -125,6 +125,20 @@ export const handlerFunctions = {
         })
     },
 
+    createPost: async (req, res) => {
+        const newPost = await Post.create({
+            title: req.body.title,
+            category: req.body.category,
+            body: req.body.body,
+            userID: req.body.userID
+        })
+
+        res.json({
+            message: 'post created',
+            success: true
+        })
+    },
+
     comments: async (req, res) => {
         try {
             const { postID } = req.params
@@ -167,6 +181,19 @@ export const handlerFunctions = {
             isLiked: isLiked,
             commentLikeID: commentLikeID,
             author: author.username
+        })
+    },
+
+    createComment: async (req, res) => {
+        const newComment = await Comment.create({
+            body: req.body.body,
+            userID: req.body.userID,
+            postID: req.body.postID
+        })
+
+        res.json({
+            message: 'comment created',
+            success: true
         })
     },
 
