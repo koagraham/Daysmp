@@ -10,6 +10,7 @@ export default function Login() {
 
     const userID = useSelector((state) => state.userID)
     const userName = useSelector((state) => state.username)
+    const loggedIn = useSelector((state) => state.loggedIn)
     const dispatch = useDispatch()
 
     const handleLogin = async (e) => {
@@ -70,10 +71,10 @@ export default function Login() {
     ) : (
         <>
         <nav>
-            <h1>Login</h1>
+            <h1>{loggedIn ? "Logout" : "Login"}</h1>
             {!userID && 
                 <>
-                    <button>Login</button>
+                    <button>{loggedIn ? "Logout" : "Login"}</button>
                     <button onClick={() => setShowRegister(true)}>Register</button>
                 </>
             }

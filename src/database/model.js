@@ -71,6 +71,8 @@ export class Post extends Model {
     {
       modelName: 'post',
       sequelize: db,
+      timestamps: true,
+      updatedAt: false
     },
 );
 
@@ -96,6 +98,8 @@ export class Comment extends Model {
     {
       modelName: 'comment',
       sequelize: db,
+      timestamps: true,
+      updatedAt: false
     },
 );
 

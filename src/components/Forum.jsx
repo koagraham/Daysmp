@@ -1,22 +1,32 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { useState, useEffect } from 'react'
 import PostSquare from './forum/PostSquare.jsx'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 export default function Forum() {
+    //redux store variables
     const loggedIn = useSelector((state) => state.loggedIn)
     const userID = useSelector((state) => state.userID)
+
+    //state variables
     const [posts, setPosts] = useState([])
-    const dispatch = useDispatch()
     const [isEditing, setIsEditing] = useState(false)
     const [title, setTitle] = useState('')
     const [category, setCategory] = useState('General')
     const [body, setBody] = useState('')
+    const [currentPage, setCurrentPage] = useState(1)
+    const [totalPages, setTotalPages] = useState(1)
+
+    //action declarations
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
     
+    //helper functions
     const getPosts = async () => {
-        const res = await axios.get('/api/posts')
-        const posts = res.data.posts
-        setPosts(posts)
+        const res = await axios.get(`/api/posts?page=${currentPage}`)
+        setTotalPages(res.data.totalPages)
+        setPosts(res.data.posts)
     }
 
     const sessionCheck = async () => {
@@ -32,10 +42,16 @@ export default function Forum() {
                 }
             })
         }
+        else {
+            navigate("/login")
+        }
     }
 
-    const createPost = () => {
-        setIsEditing(true)
+    const createPost = async () => {
+        sessionCheck()
+        if (loggedIn) {
+            setIsEditing(true)
+        }
     }
 
     const handleSubmit = async (event) => {
@@ -59,12 +75,15 @@ export default function Forum() {
         getPosts()
     }
 
-    useEffect(() => {
-        sessionCheck();
-        getPosts();
-    }, [])
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+    };
 
-    if (loggedIn === true && isEditing === false) {
+    useEffect(() => {
+        getPosts();
+    }, [currentPage])
+
+    if (!isEditing) {
         return (
             <>
                 <h1>You found the forum page!</h1>
@@ -72,10 +91,18 @@ export default function Forum() {
                 <div>{posts.map((post) => (
                     <PostSquare key={post.postID} {...post}/>
                 ))}</div>
+                <div>
+                    {/* Pagination UI */}
+                    {Array.from({ length: totalPages }, (_, index) => (
+                        <button key={index + 1} onClick={() => handlePageChange(index + 1)}>
+                            {index + 1}
+                        </button>
+                    ))}
+                </div>
             </>
         )
     }
-    if (loggedIn && isEditing) {
+    if (isEditing) {
         return (
             <form onSubmit={handleSubmit}>
                 <label htmlFor="title">Title</label>
@@ -98,11 +125,6 @@ export default function Forum() {
                 <br />
                 <button type="submit">Post</button>
             </form>
-        )
-    }
-    if (!loggedIn) {
-        return (
-            <h1>You must be logged in to view this page</h1>
         )
     }
 }

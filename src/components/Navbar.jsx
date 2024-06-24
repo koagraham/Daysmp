@@ -1,6 +1,9 @@
 import { NavLink } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 export default function Navbar() {
+    const loggedIn = useSelector((state) => state.loggedIn)
+
     return (
         <nav>
             <ul>
@@ -19,10 +22,8 @@ export default function Navbar() {
             <li>
                 <NavLink to="/help">Help</NavLink>
             </li>
-            <li>
-                <NavLink to="/login">Login</NavLink>
-            </li>
             </ul>
+            <NavLink to="/login">{loggedIn ? "Logout" : "Login"}</NavLink>
         </nav>
     )
 }

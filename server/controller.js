@@ -88,12 +88,24 @@ export const handlerFunctions = {
     },
 
     posts: async (req, res) => {
-        const posts = await Post.findAll()
+        const page = req.query.page || 1
+        const pageSize = 5
+        const offset = (page - 1) * pageSize
+
+        const posts = await Post.findAll({
+            offset,
+            limit: pageSize,
+            order: [['createdAt', 'DESC']]
+        })
+
+        const totalPostsCount = await Post.count();
+        const totalPages = Math.ceil(totalPostsCount / pageSize);
 
         res.json({
             message: 'posts requested',
             success: true,
-            posts: posts
+            posts: posts,
+            totalPages: totalPages
         })
     },
 
@@ -103,11 +115,14 @@ export const handlerFunctions = {
         const likesCount = await PostLike.count({ where: { postID: req.params.postID } });
         let isLiked = false
         let postLikeID = null
-        const userLiked = await PostLike.findOne({ 
-            where: { 
-                postID: req.params.postID, 
-                userID: req.session.userID
-        }})
+        let userLiked = null
+        if (req.session.userID) {
+            userLiked = await PostLike.findOne({ 
+                where: { 
+                    postID: req.params.postID, 
+                    userID: req.session.userID
+            }})
+        }
 
         if (userLiked) {
             isLiked = true
@@ -142,14 +157,23 @@ export const handlerFunctions = {
     comments: async (req, res) => {
         try {
             const { postID } = req.params
-            const comments = await Comment.findAll({where: {
-                postID: postID
-            }})
+            const page = req.query.page || 1
+            const pageSize = 10
+            const offset = (page - 1) * pageSize
+
+            const comments = await Comment.findAndCountAll({
+                where: {postID: postID},
+                limit: pageSize,
+                offset: offset,
+                order: [['createdAt', 'ASC']]
+            })
 
             res.json({
                 message: 'comments requested',
                 success: true,
-                comments: comments
+                comments: comments.rows,
+                totalComments: comments.count,
+                totalPages: Math.ceil(comments.count / pageSize)
             })
         } catch (error) {
             console.error(error)
@@ -162,11 +186,14 @@ export const handlerFunctions = {
         const likesCount = await CommentLike.count({ where: { commentID: req.params.commentID } });
         let isLiked = false
         let commentLikeID = null
-        const userLiked = await CommentLike.findOne({ 
-            where: { 
-                commentID: req.params.commentID, 
-                userID: req.session.userID
-        }})
+        let userLiked = null
+        if (req.session.userID) {
+            userLiked = await CommentLike.findOne({ 
+                where: { 
+                    commentID: req.params.commentID, 
+                    userID: req.session.userID
+            }})
+        }
 
         if (userLiked) {
             isLiked = true
