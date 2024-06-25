@@ -34,7 +34,7 @@ export default function Server() {
 
     return (
         <div>
-            <h1>You found the server page!</h1>
+            <h1>Server</h1>
             <h3>IP: {ip ? hostname : "Connection Error"}</h3>
             <h3>Version: {version ? version : "Connection Error"}</h3>
             <h3>Status: {status ? "Online" : "Offline"}</h3>

@@ -74,8 +74,7 @@ export default function Login() {
             <h1>{loggedIn ? "Logout" : "Login"}</h1>
             {!userID && 
                 <>
-                    <button>{loggedIn ? "Logout" : "Login"}</button>
-                    <button onClick={() => setShowRegister(true)}>Register</button>
+                    <button onClick={() => setShowRegister(true)}>Register a new account</button>
                 </>
             }
         </nav>

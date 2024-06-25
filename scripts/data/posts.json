@@ -16,5 +16,23 @@
         "category": "Announcement",
         "body": "Now accepting mod applications until July 4th. See attached link below for more details!",
         "userID": 1
+    },
+    {
+        "title": "Migrating to a newer version?",
+        "category": "General",
+        "body": "How would the Daybreaker SMP do if it migrated to the latest snapshot of Minecraft? I'm curious to see so I decided to run the experiment myself on a server I hosted myself",
+        "userID": 6
+    },
+    {
+        "title": "Trailer",
+        "category": "Announcement",
+        "body": "I made a fan trailer for the Daybreaker SMP and I think it would cool if you guys got to see it",
+        "userID": 3
+    },
+    {
+        "title": "Forums",
+        "category": "General",
+        "body": "How do you guys like the forums?",
+        "userID": 3
     }
 ]

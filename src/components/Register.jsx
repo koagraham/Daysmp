@@ -1,13 +1,16 @@
 import axios from 'axios'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 export default function Register({ setShowRegister}) {
-
+  //state variables
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
+  //action declarations
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const handleRegister = async (e) => {
     e.preventDefault()
@@ -25,9 +28,9 @@ export default function Register({ setShowRegister}) {
         setShowRegister(false)
         setUsername("")
         setPassword("")
+        navigate("/")
       }
 
-      alert(res.data.message)
     })
   }
 

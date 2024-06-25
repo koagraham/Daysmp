@@ -25,7 +25,7 @@ export const handlerFunctions = {
     register: async (req, res) => {
         const { username, password } = req.body
 
-        if (await User.findOne({ where: { name: username }})) {
+        if (await User.findOne({ where: { username: username }})) {
             res.json({
                 message: 'username taken'
             })

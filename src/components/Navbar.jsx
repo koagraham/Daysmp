@@ -5,9 +5,9 @@ export default function Navbar() {
     const loggedIn = useSelector((state) => state.loggedIn)
 
     return (
-        <nav>
+        <nav className="flex justify-between">
             <ul>
-            <li>
+            <li className="text-orange">
                 <NavLink to="/">Home</NavLink>
             </li>
             <li>

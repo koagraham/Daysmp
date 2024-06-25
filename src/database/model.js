@@ -27,7 +27,7 @@ export class User extends Model {
       email: {
         type: DataTypes.STRING(30),
         unique: true,
-        allowNull: false
+        allowNull: true
       },
       password: {
         type: DataTypes.STRING,

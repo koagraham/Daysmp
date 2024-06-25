@@ -86,7 +86,7 @@ export default function Forum() {
     if (!isEditing) {
         return (
             <>
-                <h1>You found the forum page!</h1>
+                <h1>The Forums</h1>
                 <button onClick={createPost}>Create Post</button>
                 <div>{posts.map((post) => (
                     <PostSquare key={post.postID} {...post}/>
