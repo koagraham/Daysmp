@@ -55,7 +55,7 @@ export class Post extends Model {
         primaryKey: true,
       },
       title: {
-        type: DataTypes.STRING(60),
+        type: DataTypes.STRING(40),
         unique: true,
         allowNull: false
       },

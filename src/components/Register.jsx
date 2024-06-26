@@ -35,24 +35,26 @@ export default function Register({ setShowRegister}) {
   }
 
   return (
-    <div id='register'>
+    <div id='register' className="relative bg-cover bg-center h-screen max-w-screen flex flex-col p-5 items-center" style={{ backgroundImage: "url('https://wallpapercave.com/wp/wp10723209.jpg')" }}>
       <form onSubmit={handleRegister}>
-        <h1>Register</h1>
+        <h1 className="text-4xl font-bold text-white outline-text text-center">Register</h1>
 
         <input
           type='text'
-          placeholder='username'
+          placeholder='Username'
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+          className="m-1"
         />
         <input
           type='password'
-          placeholder='password'
+          placeholder='Password'
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          className="m-1"
         />
 
-        <input type='submit' value='Register' />
+        <input type='submit' value='Register' className="m-2 border font-semibold text-black bg-white rounded-md px-2 py-1 hover:bg-yellow-500"/>
       </form>
     </div>
   )

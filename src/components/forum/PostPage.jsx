@@ -112,35 +112,40 @@ export default function PostPage() {
     }, [page])
 
     return (
-        <div>
-            <h1>{post.title}</h1>
-            <h3>{author}</h3>
-            <p>{post.body}</p>
-            <button onClick={toggleLike}>{isLiked ? <AiFillLike /> : <AiOutlineLike />} {likes}</button>
+        <div className="relative bg-cover bg-center h-screen max-w-screen flex flex-col p-5 items-center" style={{ backgroundImage: "url('https://wallpapercave.com/wp/wp10723209.jpg')" }}>
+            <h1 className="text-4xl text-yellow-500 outline-text font-bold">{post.title}</h1>
+            <h3 className="text-white font-semibold outline-text">{author}</h3>
+            <div className="flex justify-center w-full mt-4">
+                <p className="text-white font-semibold outline-text border p-4">{post.body}</p>
+                <button className="mx-1 border font-semibold text-black bg-white rounded-md px-2 py-1 hover:bg-yellow-500" onClick={toggleLike}>{isLiked ? <AiFillLike /> : <AiOutlineLike />} {likes}</button>
+            </div>
             <ul>{comments.map((comment) => (
                 <Comment key={comment.commentID} {...comment}/>
             ))}</ul>
             {!isEditing ?
-                <button onClick={createComment}>Comment</button>
+                <button className="mt-2 border font-semibold text-black bg-white rounded-md px-2 py-1 hover:bg-yellow-500" onClick={createComment}>Comment</button>
                 :
                 <div></div>    
             }
             {isEditing ? 
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} className="flex flex-col items-center">
                     <textarea id="body" name="body" maxLength="250" value={body} required
-                    onChange={(e) => setBody(e.target.value)}></textarea>
-                    <br />
-                    <button type="submit">Comment</button>
+                    onChange={(e) => setBody(e.target.value)}
+                    className="m-1 w-full h-18 p-2 border rounded-md resize-y"
+                    style={{ minWidth: '400px' }}>
+                    </textarea>
+                    <button type="submit" className=" border font-semibold text-black bg-white rounded-md px-4 py-2 hover:bg-yellow-500">Comment</button>
                 </form>
                 :
                 <span></span>
             }
 
             {/* Pagination controls */}
+            <div className="text-2xl text-white outline-text"></div>
             {totalPages > 1 && (
-                <div>
+                <div className="text-2xl text-white outline-text">
                     {Array.from({ length: totalPages }, (_, index) => (
-                        <button key={index} onClick={() => setPage(index + 1)}>{index + 1}</button>
+                        <button className=" m-1 border px-2 hover:underline" key={index} onClick={() => setPage(index + 1)}>{index + 1}</button>
                     ))}
                 </div>
             )}

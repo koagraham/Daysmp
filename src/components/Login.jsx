@@ -69,40 +69,43 @@ export default function Login() {
     return showRegister ? (
         <Register setShowRegister={setShowRegister} />
     ) : (
-        <>
-        <nav>
-            <h1>{loggedIn ? "Logout" : "Login"}</h1>
-            {!userID && 
+        <div className="relative bg-cover bg-center h-screen max-w-screen flex flex-col p-5 items-center" style={{ backgroundImage: "url('https://wallpapercave.com/wp/wp10723209.jpg')" }}>
+            <nav>
+                <h1 className="text-3xl text-white outline-text font-bold">{loggedIn ? "" : "Login"}</h1>
+            </nav>
+                {!userID && 
+                    <>
+                        <button className="m-2 border font-semibold text-black bg-white rounded-md px-2 py-1 hover:bg-yellow-500" onClick={() => setShowRegister(true)}>Register a new account</button>
+                    </>
+                }
+            {!userID &&
+                <form  onSubmit={handleLogin}>
+                    <input 
+                        type='text' 
+                        value={username} 
+                        placeholder='Username' 
+                        onChange={(e) => setUsername(e.target.value)}
+                        className="m-1"
+                        />
+                    <input 
+                        type='password'
+                        value={password}
+                        placeholder='Password'
+                        onChange={(e) => setPassword(e.target.value)}
+                        className="m-1"
+                        />
+                    <input 
+                        type='submit'
+                        className="m-2 border font-semibold text-black bg-white rounded-md px-2 py-1 hover:bg-yellow-500"
+                        />
+                </form>
+            }
+            {userID && 
                 <>
-                    <button onClick={() => setShowRegister(true)}>Register a new account</button>
+                    <h3 className="text-yellow-500 text-4xl outline-text font-bold">Welcome, {userName}</h3>
+                    <button className="m-2 border font-semibold text-black bg-white rounded-md px-2 py-1 hover:bg-yellow-500" onClick={handleLogout}>Logout</button>
                 </>
             }
-        </nav>
-        {!userID &&
-            <form onSubmit={handleLogin}>
-                <input 
-                    type='text' 
-                    value={username} 
-                    placeholder='Username' 
-                    onChange={(e) => setUsername(e.target.value)}
-                    />
-                <input 
-                    type='password'
-                    value={password}
-                    placeholder='Password'
-                    onChange={(e) => setPassword(e.target.value)}
-                    />
-                <input 
-                    type='submit'
-                    />
-            </form>
-        }
-        {userID && 
-            <>
-                <h3>Welcome, {userName}</h3>
-                <button onClick={handleLogout}>Logout</button>
-            </>
-        }
-        </>
+        </div>
     )
 }

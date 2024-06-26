@@ -158,7 +158,7 @@ export const handlerFunctions = {
         try {
             const { postID } = req.params
             const page = req.query.page || 1
-            const pageSize = 10
+            const pageSize = 5
             const offset = (page - 1) * pageSize
 
             const comments = await Comment.findAndCountAll({

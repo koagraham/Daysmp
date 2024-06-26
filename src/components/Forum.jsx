@@ -85,45 +85,44 @@ export default function Forum() {
 
     if (!isEditing) {
         return (
-            <>
-                <h1>The Forums</h1>
-                <button onClick={createPost}>Create Post</button>
+            <div className="relative bg-cover bg-center h-screen max-w-screen flex flex-col justify-center items-center" style={{ backgroundImage: "url('https://i.redd.it/fteatt0lgoz61.png')" }}>
+                <h1 className="text-4xl text-white font-bold outline-text p-4">The Forums</h1>
+                <button className="border font-semibold text-black bg-white rounded-md px-2 py-1 hover:bg-yellow-500" onClick={createPost}>Create Post</button>
                 <div>{posts.map((post) => (
                     <PostSquare key={post.postID} {...post}/>
                 ))}</div>
-                <div>
+                <div className="text-2xl text-white outline-text">
                     {/* Pagination UI */}
                     {Array.from({ length: totalPages }, (_, index) => (
-                        <button key={index + 1} onClick={() => handlePageChange(index + 1)}>
+                        <button className="m-1 border px-2 hover:underline" key={index + 1} onClick={() => handlePageChange(index + 1)}>
                             {index + 1}
                         </button>
                     ))}
                 </div>
-            </>
+            </div>
         )
     }
     if (isEditing) {
         return (
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="title">Title</label>
-                <br />
-                <input type="text" id="title" name="title" maxLength="60" value={title} required
-                onChange={(e) => setTitle(e.target.value)}></input>
-                <br />
-                <label htmlFor="category">Category</label>
-                <br />
+            <form onSubmit={handleSubmit} className="relative bg-cover bg-center h-screen max-w-screen flex flex-col p-5 items-center" style={{ backgroundImage: "url('https://wallpapercave.com/wp/wp10723209.jpg')" }}>
+                <label htmlFor="title" className="text-2xl text-white outline-text font-bold">Title</label>
+                <input type="text" id="title" name="title" maxLength="40" value={title} required
+                onChange={(e) => setTitle(e.target.value)} placeholder="title"></input>
+                <label htmlFor="category" className="text-2xl text-white outline-text font-bold m-1">Category</label>
                 <select id="category" name="category" value={category}
-                onChange={(e) => setCategory(e.target.value)}>
+                onChange={(e) => setCategory(e.target.value)}
+                className="m-1">
                     <option value="General">General</option>
                     <option value="Help">Help</option>
                     <option value="Off Topic">Off Topic</option>
                     <option value="PvP">PvP</option>
                 </select>
-                <br />
                 <textarea id="body" name="body" maxLength="500" value={body} required
-                onChange={(e) => setBody(e.target.value)}></textarea>
-                <br />
-                <button type="submit">Post</button>
+                onChange={(e) => setBody(e.target.value)} placeholder="Write your post here..."
+                className="m-1 h-36 p-2 border rounded-md resize-y"
+                style={{ minWidth: '800px' }}>
+                </textarea>
+                <button type="submit" className="m-1 border font-semibold text-black bg-white rounded-md px-2 py-1 hover:bg-yellow-500">Post</button>
             </form>
         )
     }

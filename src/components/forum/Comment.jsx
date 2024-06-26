@@ -68,10 +68,11 @@ export default function Comment({ commentID, body }) {
     }, [])
 
     return (
-        <li>
-            <h4>{author}</h4>
-            <p>{body}</p>
-            <button onClick={toggleLike}>{isLiked ? <AiFillLike /> : <AiOutlineLike />} {likes}</button>
+        <li className="flex flex-col items-center">
+            <div className="flex justify-center w-full mt-2">
+                <p className="text-white font-semibold outline-text border p-4">{body} - {author}</p>
+                <button className="mx-1 border font-semibold text-black bg-white rounded-md px-2 py-1 hover:bg-yellow-500" onClick={toggleLike}>{isLiked ? <AiFillLike /> : <AiOutlineLike />} {likes}</button>
+            </div>
         </li>
     )
 }

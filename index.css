@@ -1,3 +1,42 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.outline-text {
+    /* White text with black outline */
+    text-shadow:
+      -1px -1px 0 #000,  
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+      1px 1px 0 #000;
+}
+
+.outline-text-white {
+  /* White text with black outline */
+  text-shadow:
+    -1px -1px 0 #FFFFFF,  
+    1px -1px 0 #FFFFFF,
+    -1px 1px 0 #FFFFFF,
+    1px 1px 0 #FFFFFF;
+}
+
+.color-redstone {
+  /*Redstone color for text*/
+  color: #970000;
+}
+
+.color-redstone1 {
+  color: #AB0000;
+}
+
+.color-redstone2 {
+  color: #D30000;
+}
+
+.color-redstone3 {
+  color: #E70600;
+}
+
+.color-redstone4 {
+  color: #FC3100;
+}

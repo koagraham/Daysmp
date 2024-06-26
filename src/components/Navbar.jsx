@@ -1,29 +1,23 @@
-import { NavLink } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 export default function Navbar() {
-    const loggedIn = useSelector((state) => state.loggedIn)
+    const loggedIn = useSelector((state) => state.loggedIn);
 
     return (
-        <nav className="flex justify-between">
-            <ul>
-            <li className="text-orange">
-                <NavLink to="/">Home</NavLink>
-            </li>
-            <li>
-                <NavLink to="/server">Server</NavLink>
-            </li>
-            <li>
-                <NavLink to="/forum">Forum</NavLink>
-            </li>
-            <li>
-                <NavLink to="/rules">Rules</NavLink>
-            </li>
-            <li>
-                <NavLink to="/help">Help</NavLink>
-            </li>
-            </ul>
-            <NavLink to="/login">{loggedIn ? "Logout" : "Login"}</NavLink>
-        </nav>
-    )
+        <div className="bg-black p-5 flex justify-between sticky top-0 z-50">
+            <nav className="flex justify-between items-center w-5/12">
+                <NavLink to="/" className="text-white font-bold hover:text-yellow-500 hover:underline">Home</NavLink>
+                <NavLink to="/server" className="text-white ml-4 font-bold hover:text-yellow-500 hover:underline">Server</NavLink>
+                <NavLink to="/forum" className="text-white ml-4 font-bold hover:text-yellow-500 hover:underline">Forum</NavLink>
+                <NavLink to="/rules" className="text-white ml-4 font-bold hover:text-yellow-500 hover:underline">Rules</NavLink>
+                <NavLink to="/help" className="text-white ml-4 font-bold hover:text-yellow-500 hover:underline">Help</NavLink>
+            </nav>
+            <div className="flex items-center">
+                <NavLink to="/login" className="text-white font-bold ml-auto hover:text-yellow-500 hover:underline">
+                    {loggedIn ? "Logout" : "Login"}
+                </NavLink>
+            </div>
+        </div>
+    );
 }
