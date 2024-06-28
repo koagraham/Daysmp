@@ -9,7 +9,7 @@ export default function Navbar() {
             <nav className="flex justify-between items-center w-5/12">
                 <NavLink to="/" className="text-white font-bold hover:text-yellow-500 hover:underline">Home</NavLink>
                 <NavLink to="/server" className="text-white ml-4 font-bold hover:text-yellow-500 hover:underline">Server</NavLink>
-                <NavLink to="/forum" className="text-white ml-4 font-bold hover:text-yellow-500 hover:underline">Forum</NavLink>
+                <NavLink to="/forum" className="text-white ml-4 font-bold hover:text-yellow-500 hover:underline">Forums</NavLink>
                 <NavLink to="/rules" className="text-white ml-4 font-bold hover:text-yellow-500 hover:underline">Rules</NavLink>
                 <NavLink to="/help" className="text-white ml-4 font-bold hover:text-yellow-500 hover:underline">Help</NavLink>
             </nav>

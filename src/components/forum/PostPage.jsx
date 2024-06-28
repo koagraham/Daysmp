@@ -116,7 +116,7 @@ export default function PostPage() {
             <h1 className="text-4xl text-yellow-500 outline-text font-bold">{post.title}</h1>
             <h3 className="text-white font-semibold outline-text">{author}</h3>
             <div className="flex justify-center w-full mt-4">
-                <p className="text-white font-semibold outline-text border p-4">{post.body}</p>
+                <p className="text-white text-2xl font-semibold outline-text border p-4">{post.body}</p>
                 <button className="mx-1 border font-semibold text-black bg-white rounded-md px-2 py-1 hover:bg-yellow-500" onClick={toggleLike}>{isLiked ? <AiFillLike /> : <AiOutlineLike />} {likes}</button>
             </div>
             <ul>{comments.map((comment) => (

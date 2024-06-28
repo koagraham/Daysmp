@@ -14,6 +14,7 @@ const usersToCreate = []
 for (let i = 1; i < 10; i++) {
     usersToCreate.push({username: `user${i}`, email: `user${i}@gmail.com`, password: bcryptjs.hashSync('test', bcryptjs.genSaltSync(10))})
 }
+usersToCreate.push({username: "Daybreaker", email: "null", password: bcryptjs.hashSync('test', bcryptjs.genSaltSync(10))})
 
 const usersInDB = await Promise.all(usersToCreate.map(async (user) => {
     const {username, email, password} = user
