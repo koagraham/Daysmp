@@ -9,6 +9,7 @@
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "start": "vite",
+    "initdb": "dropdb --if-exists forum && createdb forum && node src/database/seed.js",
     "seed": "node scripts/seed.js -w server/server.js -w src"
   },
   "dependencies": {
