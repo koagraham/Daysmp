@@ -29,26 +29,7 @@ export default function Forum() {
         setPosts(res.data.posts)
     }
 
-    const sessionCheck = async () => {
-        const res = await axios.get('/api/session-check')
-
-        if (res.data.success) {
-            dispatch({
-                type: "USER_AUTH",
-                payload: {
-                    userID: res.data.userID,
-                    username: res.data.username,
-                    loggedIn: true
-                }
-            })
-        }
-        else {
-            navigate("/login")
-        }
-    }
-
     const createPost = async () => {
-        sessionCheck()
         if (loggedIn) {
             setIsEditing(true)
         }

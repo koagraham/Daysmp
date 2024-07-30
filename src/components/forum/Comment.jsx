@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { AiOutlineLike, AiFillLike } from "react-icons/ai"
 import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 export default function Comment({ commentID, body }) {
@@ -15,10 +14,6 @@ export default function Comment({ commentID, body }) {
     const userID = useSelector((state) => state.userID)
     const loggedIn = useSelector((state) => state.loggedIn)
 
-    //action declarations
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
-
     const getComment = async () => {
         const res = await axios.get(`/api/comments/${commentID}`) 
         setLikes(res.data.likes)
@@ -27,26 +22,8 @@ export default function Comment({ commentID, body }) {
         setAuthor(res.data.author)
     }
 
-    const sessionCheck = async () => {
-        const res = await axios.get('/api/session-check')
-
-        if (res.data.success) {
-            dispatch({
-                type: "USER_AUTH",
-                payload: {
-                    userID: res.data.userID,
-                    username: res.data.username,
-                    loggedIn: true
-                }
-            })
-        }
-        else {
-            navigate("/login")
-        }
-    }
 
     const toggleLike = async () => {
-        sessionCheck()
         if (loggedIn) {
             if (isLiked) {
                 await axios.delete(`/api/commentLikes/${commentLikeID}`)

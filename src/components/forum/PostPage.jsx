@@ -45,26 +45,7 @@ export default function PostPage() {
         setTotalPages(res.data.totalPages)
     }
 
-    const sessionCheck = async () => {
-        const res = await axios.get('/api/session-check')
-
-        if (res.data.success) {
-            dispatch({
-                type: "USER_AUTH",
-                payload: {
-                    userID: res.data.userID,
-                    username: res.data.username,
-                    loggedIn: true
-                }
-            })
-        }
-        else {
-            navigate("/login")
-        }
-    }
-
     const toggleLike = async () => {
-        sessionCheck()
         if (loggedIn) {
             if (isLiked) {
                 await axios.delete(`/api/postLikes/${postLikeID}`)
@@ -82,7 +63,6 @@ export default function PostPage() {
     }
 
     const createComment = () => {
-        sessionCheck()
         if (loggedIn) {
             setIsEditing(true)
         }
