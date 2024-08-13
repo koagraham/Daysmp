@@ -35,10 +35,10 @@ export default function Server() {
     return (
         <div className="relative bg-cover bg-center h-screen max-w-screen flex flex-col justify-center items-center" style={{ backgroundImage: "url('https://static.planetminecraft.com/files/resource_media/screenshot/1143/scr%20red_718008.jpg')" }}>
             <h1 className="text-4xl text-white font-bold outline-text ">Server</h1>
-            <h3 className="text-2xl color-redstone3 font-bold outline-text">IP: {ip ? hostname : "Loading..."}</h3>
-            <h3 className="text-2xl color-redstone3 font-bold outline-text">Version: {version ? version : "Loading..."}</h3>
-            <h3 className="text-2xl color-redstone3 font-bold outline-text">Status: {status ? "Online" : "Offline"}</h3>
-            <h3 className="text-2xl color-redstone3 font-bold outline-text">Current Players: {players ? players : "Loading..."}/{maxPlayers ? maxPlayers : ""}</h3>
+            <h3 className="text-2xl color-redstone3 font-bold outline-text">IP: daybreaker.fr.to</h3>
+            <h3 className="text-2xl color-redstone3 font-bold outline-text">Version: 1.20.4</h3>
+            <h3 className="text-2xl color-redstone3 font-bold outline-text">Status: Offline</h3>
+            <h3 className="text-2xl color-redstone3 font-bold outline-text">Current Players: 0/100</h3>
         </div>
     )
 }

@@ -14,6 +14,7 @@ import Rules from './components/Rules.jsx'
 import Help from './components/Help.jsx'
 import Login from './components/Login.jsx'
 import PostPage from './components/forum/PostPage.jsx'
+import Error from './components/Error.jsx'
 import store from './redux/store.js'
 import { Provider } from 'react-redux'
 
@@ -27,6 +28,7 @@ const router = createBrowserRouter(
           <Route path="rules" element={<Rules />} />
           <Route path="help" element={<Help />} />
           <Route path="login" element={<Login />} />
+          <Route path="*" element={<Error />} />
       </Route>
     )
 )
